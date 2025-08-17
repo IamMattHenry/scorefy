@@ -42,7 +42,7 @@ const DashboardPage = () => {
       <main className="flex-1 p-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Welcome, msttxxx!</h1>
+          <h1 className="text-3xl font-bold">Welcome, msttxx!</h1>
         </div>
 
         {/* Stats Cards */}
