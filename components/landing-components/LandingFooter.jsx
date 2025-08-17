@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function LandingFooter() {
   return (
-    <footer className="flex items-center justify-between py-4 bg-[var(--bg-scorefy-bg)] w-full">
+    <footer className="flex items-center justify-between py-4 bg-[var(--bg-scorefy-bg)] w-full mt-20">
       <div className="flex flex-col items-center w-full justify-center text-white/70 font-blinker text-sm">
         <p>© 2025 Scorefy</p>
         <div className="flex flex-row items-center justify-center">

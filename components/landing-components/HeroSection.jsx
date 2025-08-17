@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="grid grid-cols-2 w-full h-full mb-15">
+    <section className="grid grid-cols-2 w-full h-full">
       {/* First Column */}
       <div className="flex flex-col items-start justify-center pl-20">
         <h1 className="text-7xl font-bold font-bebas text-white tracking-wider">
