@@ -1,150 +1,298 @@
-import React from 'react';
-import { Button } from "@/components/ui/button";
+"use client";
 
-const DashboardPage = () => {
+import {
+  Ear,
+  Play,
+  TrendingUp,
+  Flame,
+  Target,
+  Settings,
+  LogOut,
+  User,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+export default function DashboardPage() {
+  const router = useRouter();
+
+  // Handle logout functionality
+  const handleLogout = () => {
+    // Add your logout logic here (clear tokens, etc.)
+    router.push("/login");
+  };
+
+  // Handle settings navigation
+  const handleSettings = () => {
+    // Navigate to settings page
+    router.push("/settings");
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen font-blinker bg-[linear-gradient(to_bottom_right,_#030A00_0%,_#091E01_50%,_#030A00_100%)]">
       {/* Header */}
-      <header className="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
-        <div className="flex items-center">
-          <div className="w-8 h-8 bg-white rounded-full mr-3 flex items-center justify-center">
-            <div className="w-6 h-6 bg-gray-900 rounded-full flex items-center justify-center">
-              <div className="w-4 h-1 bg-white rounded"></div>
-              <div className="w-4 h-1 bg-white rounded ml-1"></div>
-            </div>
-          </div>
-          <div className="text-xl font-bold">SCOREFY</div>
+      <header className="flex items-center justify-between p-6">
+        {/* Logo Section - Left side */}
+        <div className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 text-white">
+            <Ear className="h-10 w-10" />
+            <h1 className="text-4xl font-bold font-anton">Scorefy</h1>
+          </Link>
         </div>
-        
+
+        {/* Search Bar - Center */}
         <div className="flex-1 max-w-md mx-8">
           <div className="relative">
             <input
               type="text"
               placeholder="What do you want to play?"
-              className="w-full p-3 pl-10 rounded-lg bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:outline-none focus:border-green-500"
+              className="w-full p-1.5 pl-10 rounded-lg bg-gray-800/30 text-white placeholder-gray-400 border border-gray-600/30 focus:outline-none focus:border-green-500 transition-colors"
             />
-            <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
           </div>
         </div>
 
+        {/* User Profile Section - Right side */}
         <div className="flex items-center space-x-4">
-          <div className="text-sm bg-green-600 px-3 py-1 rounded-full">
-            msttxxx
+          {/* Username with ID */}
+          <div className="text-white font-semibold">
+            msttxx<span className="text-green-500">#4444</span>
+            {/* Level Progress Bar */}
+            <div className="flex flex-col items-end space-y-1">
+              <div className="w-32 bg-gray-800/50 rounded-full h-2">
+                <div
+                  className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                  style={{ width: "75%" }}
+                ></div>
+              </div>
+            </div>
+            <div className="text-green-500 text-sm font-semibold">
+              Level: 4
+            </div>
           </div>
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
-            Level 4
-          </div>
+
+          {/* Interactive Avatar with Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="relative h-12 w-12 rounded-full bg-blue-600 hover:bg-blue-700 transition-colors p-0"
+              >
+                {/* Avatar with sunglasses emoji/icon */}
+                <div className="flex items-center justify-center w-full h-full text-white text-lg">
+                  😎
+                </div>
+                {/* Online indicator */}
+                <div className="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-gray-900 rounded-full"></div>
+              </Button>
+            </DropdownMenuTrigger>
+
+            {/* Dropdown Menu Content */}
+            <DropdownMenuContent
+              className="w-56 bg-gray-800 border-gray-700"
+              align="end"
+              forceMount
+            >
+              <DropdownMenuLabel className="font-normal text-white">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">msttxx</p>
+                  <p className="text-xs leading-none text-gray-400">
+                    Level 4 • 4444 Points
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+
+              <DropdownMenuSeparator className="bg-gray-700" />
+
+              {/* Profile Menu Item */}
+              <DropdownMenuItem
+                className="text-white hover:bg-gray-700 cursor-pointer"
+                onClick={() => router.push("/profile")}
+              >
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+
+              {/* Settings Menu Item */}
+              <DropdownMenuItem
+                className="text-white hover:bg-gray-700 cursor-pointer"
+                onClick={handleSettings}
+              >
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator className="bg-gray-700" />
+
+              {/* Logout Menu Item */}
+              <DropdownMenuItem
+                className="text-red-400 hover:bg-gray-700 hover:text-red-300 cursor-pointer"
+                onClick={handleLogout}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 
-      <main className="flex-1 p-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold">Welcome, msttxx!</h1>
-        </div>
+      {/* Main Content */}
+      <main className="p-8">
+        <h2 className="text-3xl font-bold text-white mb-8">Welcome, msttxx!</h2>
 
-        {/* Stats Cards */}
+        {/* Stats Cards - Made interactive with hover effects */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-green-700 p-6 rounded-lg relative">
+          {/* Current Points Card */}
+          <div className="bg-[#446D4A] p-6 rounded-lg relative hover:bg-[#4a7550] transition-colors cursor-pointer group">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold mb-2">Current Points</h3>
-                <p className="text-2xl font-bold">4444</p>
+                <h3 className="text-lg font-semibold mb-2 text-white">
+                  Current Points
+                </h3>
+                <p className="text-3xl font-bold text-white group-hover:scale-105 transition-transform">
+                  4444
+                </p>
               </div>
-              <div className="text-green-300">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
+              <div className="text-white/70 group-hover:text-white transition-colors">
+                <Target className="w-6 h-6" />
               </div>
             </div>
           </div>
 
-          <div className="bg-green-700 p-6 rounded-lg relative">
+          {/* Level Card */}
+          <div className="bg-[#446D4A] p-6 rounded-lg relative hover:bg-[#4a7550] transition-colors cursor-pointer group">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold mb-2">Level 4</h3>
-                <p className="text-2xl font-bold">4444</p>
+                <h3 className="text-lg font-semibold mb-2 text-white">
+                  Level 4
+                </h3>
+                <p className="text-3xl font-bold text-white group-hover:scale-105 transition-transform">
+                  4444
+                </p>
               </div>
-              <div className="text-green-300">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
+              <div className="text-white/70 group-hover:text-white transition-colors">
+                <TrendingUp className="w-6 h-6" />
               </div>
             </div>
           </div>
 
-          <div className="bg-green-700 p-6 rounded-lg relative">
+          {/* Streak Card */}
+          <div className="bg-[#446D4A] p-6 rounded-lg relative hover:bg-[#4a7550] transition-colors cursor-pointer group">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold mb-2">4-Day Streak</h3>
-                <p className="text-sm text-green-200">Keep up the good work!</p>
+                <h3 className="text-lg font-semibold mb-2 text-white">
+                  4-Day Streak
+                </h3>
+                <p className="text-sm text-white/80">Keep up the good work!</p>
               </div>
-              <div className="text-green-300">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
-                </svg>
+              <div className="text-white/70 group-hover:text-white transition-colors">
+                <Flame className="w-6 h-6 group-hover:text-orange-400" />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Main Content Grid */}
+        {/* Bottom Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Listening History */}
-          <div className="bg-gray-800 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold mb-6">Listening History</h3>
+          <div className="bg-[#172419] p-6 rounded-lg">
+            <h3 className="text-xl font-semibold mb-6 text-white">
+              Listening History
+            </h3>
             <div className="space-y-4">
               {[1, 2, 3].map((item) => (
-                <div key={item} className="flex items-center space-x-4 p-3 bg-gray-700 rounded-lg">
-                  <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center">
-                    <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                    </svg>
+                <div
+                  key={item}
+                  className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
+                      <div className="w-6 h-6 bg-white rounded"></div>
+                    </div>
+                    <div>
+                      <p className="text-white font-medium">Track Name</p>
+                      <p className="text-gray-400 text-sm">Artist</p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <p className="font-medium">Track Name</p>
-                    <p className="text-sm text-gray-400">Artist</p>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-gray-400 text-sm">Track Length</span>
+                    <Button
+                      size="sm"
+                      className="bg-green-600 hover:bg-green-700 text-white transition-colors"
+                    >
+                      <Play className="w-4 h-4" />
+                    </Button>
                   </div>
-                  <div className="text-sm text-gray-400">
-                    Track Length
-                  </div>
-                  <button className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700 transition-colors">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </button>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Daily Missions */}
-          <div className="bg-gray-800 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold mb-6">Daily Missions</h3>
+          <div className="bg-[#172419] p-6 rounded-lg">
+            <h3 className="text-xl font-semibold mb-6 text-white">
+              Daily Missions
+            </h3>
             <div className="space-y-4">
               {[1, 2].map((item) => (
-                <div key={item} className="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
-                  <div className="flex-1">
-                    <p className="font-medium mb-1">Mission Description</p>
+                <div
+                  key={item}
+                  className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors"
+                >
+                  <div>
+                    <p className="text-white font-medium">
+                      Mission Description
+                    </p>
                   </div>
-                  <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg">
+                  <Button
+                    size="sm"
+                    className="bg-green-600 hover:bg-green-700 text-white transition-colors"
+                  >
                     Go
                   </Button>
                 </div>
               ))}
-              
+
               {/* Mission Progress */}
-              <div className="mt-6 p-4 bg-green-700 rounded-lg">
+              <div className="mt-6">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium">Mission Completed: 0/6</span>
-                  <Button className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-1 text-sm rounded">
+                  <span className="text-white font-medium">
+                    Mission Completed: 0/6
+                  </span>
+                  <Button
+                    size="sm"
+                    className="bg-gray-600 hover:bg-gray-700 text-white transition-colors"
+                  >
                     Claim Reward
                   </Button>
                 </div>
-                <div className="w-full bg-green-800 rounded-full h-2">
-                  <div className="bg-green-400 h-2 rounded-full" style={{ width: '0%' }}></div>
+                <div className="w-full bg-gray-700 rounded-full h-2">
+                  <div
+                    className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                    style={{ width: "0%" }}
+                  ></div>
                 </div>
               </div>
             </div>
@@ -153,13 +301,15 @@ const DashboardPage = () => {
       </main>
 
       {/* Footer */}
-      <footer className="p-4 bg-gray-800 text-center text-sm text-gray-400">
-        <div className="flex items-center justify-center space-x-2">
-          <span>📊 DashboardFooter</span>
+      <footer className="flex items-center justify-between py-4 px-8 bg-[#172419]/50 w-full mt-20 border-t border-gray-700/30">
+        <div className="flex flex-col items-center w-full justify-center text-white/70 font-blinker text-sm">
+          <div className="flex flex-row items-center justify-center mt-2">
+            <p>© 2025 Scorefy</p>
+            <p className="ml-4">Terms</p>
+            <p className="ml-4">Privacy</p>
+          </div>
         </div>
       </footer>
     </div>
   );
-};
-
-export default DashboardPage;
+}
