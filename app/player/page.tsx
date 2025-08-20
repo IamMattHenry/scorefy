@@ -14,14 +14,12 @@ import {
   User,
   Users,
   Music,
-  Clock,
   Ear
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { AudiusSdk } from "@audius/sdk";
 
 export default function MusicPlayerPage() {
   // Player state management
@@ -46,6 +44,16 @@ export default function MusicPlayerPage() {
     streamUrl: string;
   }
 
+  // AudiusTrack interface
+  interface AudiusTrack {
+  id: string;
+  title: string;
+  duration: number;
+  playCount: number;
+  user?: { name: string };
+  artwork?: { _150x150?: string };
+}
+
   // Format duration helper
   function formatDuration(seconds: number): string {
     const mins = Math.floor(seconds / 60);
@@ -61,7 +69,7 @@ export default function MusicPlayerPage() {
         const res = await fetch('/api/tracks/trending');
         const data = await res.json();
 
-        const mappedTracks: Track[] = data.data.map((track: any) => ({
+        const mappedTracks: Track[] = data.data.map((track: AudiusTrack) => ({
           id: track.id,
           title: track.title,
           artist: track.user?.name ?? "Unknown Artist",
