@@ -75,6 +75,17 @@ export default function DashboardPage() {
 
         {/* User Profile Section - Right side */}
         <div className="flex items-center space-x-4">
+          {/* Music Player Link */}
+          <Link href="/player">
+            <Button 
+              variant="ghost" 
+              className="text-white hover:bg-gray-800/30 transition-colors"
+            >
+              <Play className="w-4 h-4 mr-2" />
+              Player
+            </Button>
+          </Link>
+          
           {/* Username with ID */}
           <div className="text-white font-semibold">
             msttxx<span className="text-green-500">#4444</span>
